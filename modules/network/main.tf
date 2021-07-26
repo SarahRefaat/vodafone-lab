@@ -3,7 +3,7 @@ resource "google_compute_network" "network" {
   name                            = var.vpc_name
   auto_create_subnetworks         = false
   routing_mode                    = "REGIONAL"
-  #project                         = "numeric-virtue-320621"
+  #project                        = "numeric-virtue-320621"
 }
 
 #---------------- subnet resource
@@ -17,4 +17,12 @@ resource "google_compute_subnetwork" "subnet" {
 }
 
 #---------------- firewall resource
+resource "google_compute_firewall" "firewall" {
+  name                           = "terrafrom-firewall"
+  network                        = google_compute_network.network.name
 
+  allow{
+      protocol = "tcp"
+      ports = [ "22" , "80" ,"8080" ]
+  } 
+}
