@@ -3,7 +3,7 @@ resource "google_compute_network" "network" {
   name                            = var.vpc_name
   auto_create_subnetworks         = false
   routing_mode                    = "REGIONAL"
-  project                         = "numeric-virtue-320621"
+  #project                         = "numeric-virtue-320621"
 }
 
 #---------------- subnet resource
