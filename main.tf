@@ -23,5 +23,7 @@ module "gks" {
     zones_list                    = var.zones_list
     machine_type                  = var.machine_type
     number_of_nodes_per_zone      = var.number_of_nodes_per_zone
+    cluster_name                  = var.cluster_name
+    cluster_master_cidr           = var.cluster_master_cidr
     
 }
