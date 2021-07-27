@@ -1,11 +1,11 @@
 #---------- define service account role for gks to read and get images from container registry 
 resource "google_service_account" "con-reg" {
-  account_id   = "container-registry-for-gks"
-  display_name = "container-registry-gks"
+  account_id             = "container-registry-for-gks"
+  display_name           = "container-registry-gks"
 }
-
-resource "google_service_account_iam_binding" "storage-object-viewer" {
-  service_account_id = google_service_account.sa.name
-  role               = "roles/storage.objectViewer"
+#---------- assign storage access permission for the role account to allow it to pull need images
+resource "google_project_iam_binding" "storage-object-viewer" {
+  role                   = "roles/storage.objectViewer"
+  members                 = ["serviceAccount:${google_service_account.con-reg.email}",]
   }
-  
+

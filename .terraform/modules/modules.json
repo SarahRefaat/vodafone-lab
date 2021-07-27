@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"network","Source":"./modules/network","Dir":"modules/network"}]}
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"network","Source":"./modules/network","Dir":"modules/network"},{"Key":"gks","Source":"./modules/gks","Dir":"modules/gks"}]}
