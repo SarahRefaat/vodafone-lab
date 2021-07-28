@@ -29,3 +29,16 @@ module "gks" {
     subnet_name                   = module.network.subnet_name
     subnet_cidr                   = var.subnet_cidr
 }
+
+#-------------------- module for VM
+module "vm" {
+  source                          = "./modules/vm"
+ 
+    machine_name               = var.machine_name
+    machine_type               = var.vm_machine_type
+    image_type                 = var.image_type
+    region                     = var.region
+    zone                       = var.zone
+    network_name               = module.network.network_name
+    subnet_name                = module.network.subnet_name
+}

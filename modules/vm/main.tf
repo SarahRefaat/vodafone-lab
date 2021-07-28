@@ -19,19 +19,17 @@ resource "google_project_iam_binding" "bq-read-write" {
 #-------------------------------------------------------------------------------------------------------------
 
 #----------- build VM
-resource "google_compute_instance" "default" {
+resource "google_compute_instance" "vm-test" {
   name                          = var.machine_name
   machine_type                  = var.machine_type
   zone                          = var.zone
   network_interface {
-    network                     = var.network.network_name
-    subnetwork                  = var.subnet.subnet_name
+    network                     = var.network_name
+    subnetwork                  = var.subnet_name
   }
   service_account {
     email                       = google_service_account.vm-storage.email 
-    oauth_scopes                = [
-          "https://www.googleapis.com/auth/cloud-platform"
-      ]
+    scopes                      = ["cloud-platform"]
   }
   boot_disk {
     initialize_params {
