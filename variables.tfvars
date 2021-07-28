@@ -8,8 +8,8 @@ subnet_name                = "subnet1"
 #----------------- values for gks
 cluster_region             = "us-central1"
 zones_list                 = ["us-central1-c","us-central1-f"]
-machine_type               = "e2-standard-2"
-number_of_nodes_per_zone   = 2
+node_machine_type          = "e2-standard-2"
+number_of_nodes_per_zone   = 1
 cluster_name               = "terraform-lab"
 cluster_master_cidr        = "10.0.2.0/28"
 
@@ -17,5 +17,5 @@ cluster_master_cidr        = "10.0.2.0/28"
 machine_name               = "for-test"
 vm_machine_type            = "e2-medium"
 image_type                 = "debian-cloud/debian-10"
-region                     = "us-east1"
-zone                       = "us-east1-c"
+region                     = "us-central1"
+zone                       = "us-central1-c"

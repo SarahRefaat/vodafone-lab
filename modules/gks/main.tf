@@ -47,7 +47,7 @@ resource "google_container_node_pool" "nodepool" {
   location                       = var.cluster_region 
   node_count                     = var.number_of_nodes_per_zone
   node_config {
-      machine_type               = var.machine_type
+      machine_type               = var.node_machine_type
       image_type                 = "COS_CONTAINERD"
       disk_type                  = "pd-standard"
       disk_size_gb               = 100
