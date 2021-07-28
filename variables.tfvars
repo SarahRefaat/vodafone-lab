@@ -7,7 +7,7 @@ subnet_name                = "subnet1"
 
 #----------------- variables for gks
 cluster_region             = "us-central1"
-zones_list                 = ["us-cental1-c","us-central-f"]
+zones_list                 = ["us-central1-c","us-central1-f"]
 machine_type               = "e2-standard-2"
 number_of_nodes_per_zone   = 2
 cluster_name               = "terraform-lab"

@@ -15,4 +15,5 @@ variable "cluster_master_cidr" {}
 #------------ variables for linking :)
 variable "network_name" {}
 variable "subnet_name" {}
+variable "subnet_cidr" {}
 

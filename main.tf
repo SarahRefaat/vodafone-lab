@@ -27,4 +27,5 @@ module "gks" {
     cluster_master_cidr           = var.cluster_master_cidr
     network_name                  = module.network.network_name
     subnet_name                   = module.network.subnet_name
+    subnet_cidr                   = var.subnet_cidr
 }
