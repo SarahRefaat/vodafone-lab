@@ -11,5 +11,5 @@ zones_list                 = ["us-cental1-c","us-central-f"]
 machine_type               = "e2-standard-2"
 number_of_nodes_per_zone   = 2
 cluster_name               = "terraform-lab"
-cluster_master_cidr        = "10.0.2.0/24"
+cluster_master_cidr        = "10.0.2.0/28"
 

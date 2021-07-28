@@ -25,5 +25,6 @@ module "gks" {
     number_of_nodes_per_zone      = var.number_of_nodes_per_zone
     cluster_name                  = var.cluster_name
     cluster_master_cidr           = var.cluster_master_cidr
-    
+    network_name                  = module.network.network_name
+    subnet_name                   = module.network.subnet_name
 }
