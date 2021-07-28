@@ -11,7 +11,7 @@ resource "google_project_iam_binding" "storage-object-viewer" {
   }
 #---------------------------------------------------------------------------------------------------------
 
-#-------------------------- building private gke
+#-------------------------- building private gke cluster
 resource "google_container_cluster" "primary" {
   name                           = var.cluster_name
   location                       = var.zones_list[0]
