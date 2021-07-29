@@ -28,3 +28,14 @@ variable "vm_machine_type" {}
 variable "image_type" {}
 variable "region" {}
 variable "zone" {}
+
+#---------------------------------
+
+#for buckets
+variable "bucket1_name" {}
+variable "bucket1_storage_class" {}
+
+variable "bucket2_name" {}
+variable "bucket2_storage_class" {}
+
+variable "bucket3_name" {}

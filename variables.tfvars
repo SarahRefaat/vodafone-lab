@@ -19,3 +19,12 @@ vm_machine_type            = "e2-medium"
 image_type                 = "debian-cloud/debian-10"
 region                     = "us-central1"
 zone                       = "us-central1-c"
+
+#---------------------- values for buckets
+bucket1_name               = "bucket1"
+bucket1_storage_class      = "STANDARD"
+
+bucket2_name               = "bucket2"
+bucket2_storage_class      = "STANDARD"
+
+bucket3_name               = "bucket3"

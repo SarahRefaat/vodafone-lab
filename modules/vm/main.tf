@@ -8,13 +8,13 @@ resource "google_service_account" "vm-storage" {
 resource "google_project_iam_binding" "bucket-object-viewer" {
   role                          = "roles/storage.objectViewer"
   members                       = ["serviceAccount:${google_service_account.vm-storage.email}",]
-  }
+}
 
 #---------- assign storage access permission for the role account to allow it to read/write bigqueries
 resource "google_project_iam_binding" "bq-read-write" {
   role                          = "roles/bigquery.user"
   members                       = ["serviceAccount:${google_service_account.vm-storage.email}",]
-  }
+}
 
 #-------------------------------------------------------------------------------------------------------------
 

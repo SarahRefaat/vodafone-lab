@@ -42,3 +42,30 @@ module "vm" {
     network_name               = module.network.network_name
     subnet_name                = module.network.subnet_name
 }
+
+#------------------------ module for buckets
+module "bucket1" {
+  source = "./modules/bucket"
+    
+    bucket_name                = var.bucket1_name
+    bucket_storage_class      = var.bucket1_storage_class
+  
+}
+
+
+module "bucket2" {
+  source = "./modules/bucket"
+    
+    bucket_name                = var.bucket2_name
+    bucket_storage_class      = var.bucket2_storage_class
+  
+}
+
+
+module "bucket3" {
+  source = "./modules/bucket"
+    
+    bucket_name                = var.bucket3_name
+    #bucket1_storage_class      = var.bucket3_storage_class
+  
+}

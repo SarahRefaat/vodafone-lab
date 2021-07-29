@@ -46,6 +46,11 @@ resource "google_container_node_pool" "nodepool" {
   cluster                        = google_container_cluster.primary.id
   location                       = var.cluster_region 
   node_count                     = var.number_of_nodes_per_zone
+  lifecycle {
+    ignore_changes = [
+      initial_node_count
+    ]
+  }
   node_config {
       machine_type               = var.node_machine_type
       image_type                 = "COS_CONTAINERD"
