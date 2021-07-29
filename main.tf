@@ -69,3 +69,13 @@ module "bucket3" {
     #bucket1_storage_class      = var.bucket3_storage_class
   
 }
+
+#----------------------------- module for bigqueries
+module "bq" {
+  source = "./modules/bq"
+ 
+    for_each = toset(var.bqs)
+
+      dataset_name = each.value
+  
+}

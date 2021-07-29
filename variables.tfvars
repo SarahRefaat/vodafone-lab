@@ -28,3 +28,6 @@ bucket2_name               = "bucket2"
 bucket2_storage_class      = "STANDARD"
 
 bucket3_name               = "bucket3"
+
+#------------------------ values for bqs
+bqs = ["bq1","bq2","bq3"]

@@ -39,3 +39,10 @@ variable "bucket2_name" {}
 variable "bucket2_storage_class" {}
 
 variable "bucket3_name" {}
+
+#--------------------------------------
+
+#for bq
+variable "bqs" {
+    type = list(string)
+}
