@@ -8,7 +8,7 @@ resource "google_service_account" "con-reg" {
 resource "google_project_iam_binding" "storage-object-viewer" {
   role                          = "roles/storage.objectViewer"
   members                       = ["serviceAccount:${google_service_account.con-reg.email}",]
-  }
+}
 #---------------------------------------------------------------------------------------------------------
 
 #-------------------------- building private gke cluster
@@ -38,11 +38,11 @@ resource "google_container_cluster" "primary" {
     #  cidr_block                 = "0.0.0.0/0"
     #}
   #}
-  #master_auth {
-  #  client_certificate_config {
-   #   issue_client_certificate   = true
-   #}
-  #}
+  master_auth {
+    client_certificate_config {
+      issue_client_certificate   = true
+   }
+  }
   #service_account                = google_service_account.con-reg.account_id
   remove_default_node_pool       = true
   initial_node_count             = 1
@@ -80,7 +80,7 @@ provider "kubernetes" {
   cluster_ca_certificate         = base64decode(google_container_cluster.primary.master_auth[0].cluster_ca_certificate,)
 }
 
-#-------------------------------------- create two namespaces 1-shared-services , 2-dev
+##create two namespaces 1-shared-services , 2-dev
 
 resource "kubernetes_namespace" "sv" {
   metadata {
@@ -100,3 +100,92 @@ resource "kubernetes_namespace" "dev" {
     name                         = "dev"
   }
 }
+
+## create deployments for jenkins and nexus
+resource "kubernetes_pod" "jenkins" {
+  metadata {
+    name                        = "jenkins"
+    namespace                   = kubernetes_namespace.sv.metadata.0.name
+  }  
+  spec {
+    container {
+    image                       = "gcr.io/numeric-virtue-320621/jenkins"
+    name                        = "jenkins"
+    port {
+        container_port = 8080
+      }
+    }
+  }
+  depends_on =[
+    google_container_node_pool.nodepool,
+  ]
+}
+
+resource "kubernetes_pod" "nexus" {
+  metadata {
+    name                        = "nexus"
+    namespace                   = kubernetes_namespace.sv.metadata.0.name
+  }  
+  spec {
+    container {
+    image                       = "gcr.io/numeric-virtue-320621/nexus3"
+    name                        = "nexus"
+    port {
+        container_port = 80
+      }
+    }
+  }
+  depends_on =[
+    google_container_node_pool.nodepool,
+  ]
+}
+#gcr.io/numeric-virtue-320621/web-app
+resource "kubernetes_pod" "web-app" {
+  metadata {
+    name                        = "web-app"
+    namespace                   = kubernetes_namespace.dev.metadata.0.name
+  }  
+  spec {
+    container {
+    image                       = "gcr.io/numeric-virtue-320621/web-app"
+    name                        = "web-app"
+    port {
+        container_port = 80
+      }
+    }
+  }
+  depends_on =[
+    google_container_node_pool.nodepool,
+  ]
+}
+
+#resource "kubernetes_deployment" "nexus" {
+#  metadata {
+#    name                        = "nexus"
+#    namespace                   = kubernetes_namespace.sv.metadata.0.name
+#  }  
+#  spec {
+#    replicas                    = 1
+#    selector {
+#      match_labels = {
+#        app                     = "nexus"
+#      }
+#    }
+#    template {
+#      metadata {
+#        labels = {
+#          app                  = "nexus"
+#        }
+#      }
+#    spec{
+#    container {
+#    image                       = "gcr.io/numeric-virtue-320621/nexus3"
+#    name                        = "nexus"
+#    port {
+#        container_port          = 80
+#       }
+#      }
+#     }
+#    }
+#  }
+#}
