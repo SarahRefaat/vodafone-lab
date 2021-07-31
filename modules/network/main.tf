@@ -20,9 +20,9 @@ resource "google_compute_subnetwork" "subnet" {
 resource "google_compute_firewall" "firewall" {
   name                           = "terrafrom-firewall"
   network                        = google_compute_network.network.name
-
+  source_ranges                  = ["35.235.240.0/20"]
   allow{
       protocol = "tcp"
-      ports = [ "22" , "80" ,"8080" ]
+      ports = [ "22" , "80" ,"8080" , "3389" ]
   } 
 }
