@@ -28,6 +28,8 @@ module "gks" {
     network_name                  = module.network.network_name
     subnet_name                   = module.network.subnet_name
     subnet_cidr                   = var.subnet_cidr
+    username                      = var.username
+    password                      = var.password
 }
 
 #-------------------- module for VM

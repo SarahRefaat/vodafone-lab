@@ -12,6 +12,8 @@ node_machine_type          = "e2-standard-2"
 number_of_nodes_per_zone   = 1
 cluster_name               = "terraform-lab"
 cluster_master_cidr        = "10.0.2.0/28"
+username                   = "sara"
+password                   = "sara112233445566"
 
 # -------------------- values for VM
 machine_name               = "for-test"

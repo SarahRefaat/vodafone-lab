@@ -27,14 +27,22 @@ resource "google_container_cluster" "primary" {
   }
   private_cluster_config {
   enable_private_nodes           = true 
-  enable_private_endpoint        = true
+  enable_private_endpoint        = false 
+  master_global_access_config { 
+    enabled                      = true
+  }
   master_ipv4_cidr_block         = var.cluster_master_cidr
   }
-  master_authorized_networks_config {
-    cidr_blocks {
-      cidr_block                 = var.subnet_cidr
-    }
-  }
+  #master_authorized_networks_config {
+   # cidr_blocks {
+    #  cidr_block                 = "0.0.0.0/0"
+    #}
+  #}
+  #master_auth {
+  #  client_certificate_config {
+   #   issue_client_certificate   = true
+   #}
+  #}
   #service_account                = google_service_account.con-reg.account_id
   remove_default_node_pool       = true
   initial_node_count             = 1
@@ -63,3 +71,32 @@ resource "google_container_node_pool" "nodepool" {
   }
 }
 
+#---------------------------------------------- kubernetes for namespaces and deployments
+data "google_client_config" "runner"{}
+
+provider "kubernetes" {
+  host                           = "https://${google_container_cluster.primary.endpoint}"
+  token                          = data.google_client_config.runner.access_token 
+  cluster_ca_certificate         = base64decode(google_container_cluster.primary.master_auth[0].cluster_ca_certificate,)
+}
+
+#-------------------------------------- create two namespaces 1-shared-services , 2-dev
+
+resource "kubernetes_namespace" "sv" {
+  metadata {
+    annotations                  = {
+      name                       = "shared-services"
+    }
+    name                         = "shared-services"
+  }
+}
+
+
+resource "kubernetes_namespace" "dev" {
+  metadata {
+    annotations                  = {
+      name                       = "dev"
+    }
+    name                         = "dev"
+  }
+}
