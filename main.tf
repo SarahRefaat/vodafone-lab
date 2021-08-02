@@ -5,6 +5,15 @@ provider "google" {
   region                        = "us-central1"
 }
 
+#------------------- backend remote state
+terraform {
+  backend "gcs" {
+    bucket                      = "tf-state-voda"
+    prefix                      = "state"
+    credentials                 = "credentials.json"
+  }
+}
+
 #--------------- module for network which includes VPC , subnet and firewall rules
 module "network" {
   source                         = "./modules/network"
