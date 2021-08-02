@@ -106,13 +106,16 @@ resource "kubernetes_pod" "jenkins" {
   metadata {
     name                        = "jenkins"
     namespace                   = kubernetes_namespace.sv.metadata.0.name
+    labels                      = {
+      app                       = "jenkins"
+    } 
   }  
   spec {
     container {
     image                       = "gcr.io/numeric-virtue-320621/jenkins"
     name                        = "jenkins"
     port {
-        container_port = 8080
+        container_port          = 8080
       }
     }
   }
@@ -125,13 +128,16 @@ resource "kubernetes_pod" "nexus" {
   metadata {
     name                        = "nexus"
     namespace                   = kubernetes_namespace.sv.metadata.0.name
+    labels                      = {
+      app                       = "nexus"
+    } 
   }  
   spec {
     container {
     image                       = "gcr.io/numeric-virtue-320621/nexus3"
     name                        = "nexus"
     port {
-        container_port = 80
+        container_port          = 80
       }
     }
   }
@@ -144,13 +150,16 @@ resource "kubernetes_pod" "web-app" {
   metadata {
     name                        = "web-app"
     namespace                   = kubernetes_namespace.dev.metadata.0.name
+    labels                      = {
+      app                       = "web-app"
+    } 
   }  
   spec {
     container {
     image                       = "gcr.io/numeric-virtue-320621/web-app"
     name                        = "web-app"
     port {
-        container_port = 80
+        container_port          = 80
       }
     }
   }
@@ -189,3 +198,36 @@ resource "kubernetes_pod" "web-app" {
 #    }
 #  }
 #}
+resource "kubernetes_service" "web-service" {
+  metadata {
+    name                        = "web-service"
+    namespace                   = kubernetes_namespace.dev.metadata.0.name
+  }
+  spec {
+    selector = {
+      app                       = "${kubernetes_pod.web-app.metadata.0.labels.app}"
+    }
+    port {
+      port                      = 80
+      target_port               = 80
+    }
+    type = "LoadBalancer" 
+ }
+}
+
+resource "kubernetes_service" "jenkins-test" {
+  metadata {
+    name                        = "web-service"
+    namespace                   = kubernetes_namespace.sv.metadata.0.name
+  }
+  spec {
+    selector = {
+      app                       = kubernetes_pod.jenkins.metadata.0.labels.app
+    }
+    port {
+      port                      = 8080
+      target_port               = 8080
+    }
+    type = "LoadBalancer" 
+ }
+}
